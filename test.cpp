@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
   MyCallback mc;
   parser.add_option("-K", "--callback") .action("callback") .callback(mc) .help("callback test");
 
-  OptionGroup group = OptionGroup(parser, "Dangerous Options",
+  OptionGroup group = OptionGroup("Dangerous Options",
       "Caution: use these options at your own risk. "
       "It is believed that some of them bite.");
   group.add_option("-g") .action("store_true") .help("Group option.") .set_default("0");
