@@ -1,0 +1,13 @@
+sudo: false
+
+language: cpp
+
+compiler:
+    - clang
+    - gcc
+
+script:
+    - make
+    - ./test
+    - ./test --more-milk
+    - ./test --invalid-option 2>&1 | grep 'no such option'
