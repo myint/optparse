@@ -5,7 +5,7 @@
  * See OptionParser.h for help.
  */
 
-#include "OptionParser.h"
+#include "option_parser.h"
 
 #include <cstdlib>
 #include <algorithm>

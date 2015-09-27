@@ -1,4 +1,4 @@
-#include "OptionParser.h"
+#include "option_parser.h"
 
 #include <iostream>
 #include <sstream>
@@ -6,36 +6,33 @@
 #include <complex>
 #include <algorithm>
 
-using namespace std;
-
-using namespace optparse;
 
 class Output {
 public:
-  Output(const string& d) : delim(d), first(true) {}
-  void operator() (const string& s) {
+  Output(const std::string& d) : delim(d), first(true) {}
+  void operator() (const std::string& s) {
     if (first)
       first = false;
     else
-      cout << delim;
-    cout << s;
+      std::cout << delim;
+    std::cout << s;
   }
-  ~Output() { cout << endl; }
-  const string& delim;
+  ~Output() { std::cout << std::endl; }
+  const std::string& delim;
   bool first;
 };
 
 class MyCallback : public optparse::Callback {
 public:
   MyCallback() : counter(0) {}
-  void operator() (const Option& option, const string& opt, const string& val, const OptionParser& parser) {
+  void operator() (const optparse::Option& option, const std::string& opt, const std::string& val, const optparse::OptionParser& parser) {
     counter++;
-    cout << "--- MyCallback --- " << counter << ". time called" << endl;
-    cout << "--- MyCallback --- option.action(): " << option.action() << endl;
-    cout << "--- MyCallback --- opt: " << opt << endl;
-    cout << "--- MyCallback --- val: " << val << endl;
-    cout << "--- MyCallback --- parser.usage(): " << parser.usage() << endl;
-    cout << endl;
+    std::cout << "--- MyCallback --- " << counter << ". time called" << std::endl;
+    std::cout << "--- MyCallback --- option.action(): " << option.action() << std::endl;
+    std::cout << "--- MyCallback --- opt: " << opt << std::endl;
+    std::cout << "--- MyCallback --- val: " << val << std::endl;
+    std::cout << "--- MyCallback --- parser.usage(): " << parser.usage() << std::endl;
+    std::cout << std::endl;
   }
   int counter;
 };
@@ -43,23 +40,23 @@ public:
 int main(int argc, char *argv[])
 {
 #ifndef DISABLE_USAGE
-  const string usage = "usage: %prog [OPTION]... DIR [FILE]...";
+  const std::string usage = "usage: %prog [OPTION]... DIR [FILE]...";
 #else
-  const string usage = SUPPRESS_USAGE;
+  const std::string usage = SUPPRESS_USAGE;
 #endif
-  const string version = "%prog 1.0\nCopyright (C) 2010 Johannes Weißl\n"
+  const std::string version = "%prog 1.0\nCopyright (C) 2010 Johannes Weißl\n"
     "License GPLv3+: GNU GPL version 3 or later "
     "<http://gnu.org/licenses/gpl.html>.\n"
     "This is free software: you are free to change and redistribute it.\n"
     "There is NO WARRANTY, to the extent permitted by law.";
-  const string desc = "Lorem ipsum dolor sit amet, consectetur adipisicing"
+  const std::string desc = "Lorem ipsum dolor sit amet, consectetur adipisicing"
     " elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
     " aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco"
     " laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor"
     " in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
     " pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa"
     " qui officia deserunt mollit anim id est laborum.";
-  const string epilog = "Sed ut perspiciatis unde omnis iste natus error sit"
+  const std::string epilog = "Sed ut perspiciatis unde omnis iste natus error sit"
     " voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque"
     " ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae"
     " dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit"
@@ -115,38 +112,38 @@ int main(int argc, char *argv[])
   parser.add_option_group(group);
 
   Values& options = parser.parse_args(argc, argv);
-  vector<string> args = parser.args();
+  vector<std::string> args = parser.args();
 
-  cout << "clear: " << (options.get("no_clear") ? "false" : "true") << endl;
-  cout << "string: " << options["string"] << endl;
-  cout << "clause: " << options["clause"] << endl;
-  cout << "k: " << options["k"] << endl;
-  cout << "verbosity: " << options["verbosity"] << endl;
-  cout << "number: " << (int) options.get("number") << endl;
-  cout << "int: " << (int) options.get("int") << endl;
-  cout << "float: " << (float) options.get("float") << endl;
+  std::cout << "clear: " << (options.get("no_clear") ? "false" : "true") << std::endl;
+  std::cout << "string: " << options["string"] << std::endl;
+  std::cout << "clause: " << options["clause"] << std::endl;
+  std::cout << "k: " << options["k"] << std::endl;
+  std::cout << "verbosity: " << options["verbosity"] << std::endl;
+  std::cout << "number: " << (int) options.get("number") << std::endl;
+  std::cout << "int: " << (int) options.get("int") << std::endl;
+  std::cout << "float: " << (float) options.get("float") << std::endl;
   complex<double> c = 0;
   if (options.is_set("complex")) {
-    stringstream ss;
+    std::stringstream ss;
     ss << options["complex"];
     ss >> c;
   }
-  cout << "complex: " << c << endl;
-  cout << "choices: " << (const char*) options.get("choices") << endl;
-  cout << "more: ";
+  std::cout << "complex: " << c << std::endl;
+  std::cout << "choices: " << (const char*) options.get("choices") << std::endl;
+  std::cout << "more: ";
   for_each(options.all("more").begin(), options.all("more").end(), Output(", "));
-  cout << "more_milk: ";
+  std::cout << "more_milk: ";
   {
     Output out(", ");
     for (Values::iterator it = options.all("more_milk").begin(); it != options.all("more_milk").end(); ++it)
       out(*it);
   }
-  cout << "hidden: " << options["hidden"] << endl;
-  cout << "group: " << (options.get("g") ? "true" : "false") << endl;
+  std::cout << "hidden: " << options["hidden"] << std::endl;
+  std::cout << "group: " << (options.get("g") ? "true" : "false") << std::endl;
 
-  cout << endl << "leftover arguments: " << endl;
-  for (vector<string>::const_iterator it = args.begin(); it != args.end(); ++it) {
-    cout << "arg: " << *it << endl;
+  std::cout << std::endl << "leftover arguments: " << std::endl;
+  for (vector<std::string>::const_iterator it = args.begin(); it != args.end(); ++it) {
+    std::cout << "arg: " << *it << std::endl;
   }
 
   return 0;

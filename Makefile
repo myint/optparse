@@ -1,19 +1,13 @@
-ifdef ICC
-CXX = icpc
-WARN_FLAGS = -O3 -ipo -g -Wall -wd981 -wd383 -wd2259 -Werror # -Weffc++
-else
-CXX = g++
 WARN_FLAGS = -O3 -g -Wall -Wextra -Wabi -Wctor-dtor-privacy -Wnon-virtual-dtor -Wreorder -Woverloaded-virtual -Wshadow -Wcast-align -Wpointer-arith -Wwrite-strings -Wundef -Wredundant-decls -Werror # -Weffc++
-endif
 
 BIN = test
-OBJECTS = OptionParser.o test.o
+OBJECTS = option_parser.o test.o
 
 $(BIN): $(OBJECTS)
-	$(CXX) -o $@ $(OBJECTS) $(WARN_FLAGS) $(LINKFLAGS)
+	$(CXX) -o $@ $(OBJECTS) $(WARN_FLAGS)
 
-%.o: %.cpp OptionParser.h
-	$(CXX) $(WARN_FLAGS) $(CXXFLAGS) -c $< -o $@
+%.o: %.cpp option_parser.h
+	$(CXX) $(WARN_FLAGS) -c $< -o $@
 
 .PHONY: clean
 
