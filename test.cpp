@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     group.add_option("-g").action("store_true").help("Group option.").set_default("0");
     parser.add_option_group(group);
 
-    optparse::Values &options = parser.parse_args(argc, argv);
+    const optparse::Values &options = parser.parse_args(argc, argv);
     const std::vector<std::string> args = parser.args();
 
     std::cout << "clear: " << (options.get("no_clear") ? "false" : "true") << std::endl;
@@ -145,12 +145,17 @@ int main(int argc, char *argv[])
     std::cout << "complex: " << c << std::endl;
     std::cout << "choices: " << static_cast<const char *>(options.get("choices")) << std::endl;
     std::cout << "more: ";
-    for_each(options.all("more").begin(), options.all("more").end(), Output(", "));
+    {
+        std::list<std::string> all = options.all("more");
+        for_each(all.begin(), all.end(), Output(", "));
+    }
+
     std::cout << "more_milk: ";
     {
+        std::list<std::string> all = options.all("more_milk");
         Output out(", ");
-        for (optparse::Values::const_iterator it = options.all("more_milk").begin();
-             it != options.all("more_milk").end();
+        for (optparse::Values::const_iterator it = all.begin();
+             it != all.end();
              ++it)
         {
             out(*it);

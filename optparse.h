@@ -117,13 +117,20 @@ namespace optparse
 
         typedef std::list<std::string>::iterator iterator;
         typedef std::list<std::string>::const_iterator const_iterator;
+
         std::list<std::string> &all(const std::string &d)
         {
             return _append_map[d];
         }
-        const std::list<std::string> &all(const std::string &d) const
+
+        const std::list<std::string> all(const std::string &d) const
         {
-            return _append_map.find(d)->second;
+            if (_append_map.count(d))
+            {
+                return _append_map.at(d);
+            }
+
+            return std::list<std::string>();
         }
 
     private:

@@ -66,7 +66,7 @@ Example
               .set_default("1")
               .help("don't print status messages to stdout");
 
-        optparse::Values options = parser.parse_args(argc, argv);
+        const optparse::Values options = parser.parse_args(argc, argv);
         const std::vector<std::string> args = parser.args();
 
         if (options.get("verbose"))
