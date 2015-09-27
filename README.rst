@@ -8,9 +8,11 @@ optparse should feel at home:
 https://docs.python.org/library/optparse.html
 
 Copyright (C) 2010 Johannes Weißl <jargon@molb.org>
+
 License: your favourite BSD-style license
 
-Design decisions:
+Design decisions
+================
 
 - elegant and easy usage more important than speed / flexibility
 - shortness more important than feature completeness
@@ -33,11 +35,14 @@ Why not use tclap/Opag/Options/CmdLine/Anyoption/Argument_helper/...?
 - no reason, writing one is faster than code inspection :-)
 - similarity to Python desired for faster learning curve
 
-Future work:
+Future work
+===========
 
 - nargs > 1?
 - comments?
 
+Example
+=======
 
 .. code-block:: cpp
 
