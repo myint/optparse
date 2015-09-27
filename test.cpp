@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
     group.add_option("-g").action("store_true").help("Group option.").set_default("0");
     parser.add_option_group(group);
 
-    const optparse::Values &options = parser.parse_args(argc, argv);
+    optparse::Values &options = parser.parse_args(argc, argv);
     const std::vector<std::string> args = parser.args();
 
     std::cout << "clear: " << (options.get("no_clear") ? "false" : "true") << std::endl;
