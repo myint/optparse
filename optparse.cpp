@@ -91,7 +91,7 @@ namespace optparse
             }
             if (line == 1)
                 p = std::string(pre, ' ');
-            if (wrap || new_pos + pre > linestart + len)
+            if (wrap or new_pos + pre > linestart + len)
             {
                 ss << p << s.substr(linestart, pos - linestart - 1) << std::endl;
                 linestart = pos;
@@ -439,13 +439,13 @@ namespace optparse
             print_version();
             std::exit(0);
         }
-        else if (o.action() == "callback" && o.callback())
+        else if (o.action() == "callback" and o.callback())
         {
             (*o.callback())(o, opt, value, *this);
         }
     }
 
-    std::string OptionParser::format_option_help(unsigned int indent /* = 2 */) const
+    std::string OptionParser::format_option_help(const unsigned int indent) const
     {
         std::stringstream ss;
 
@@ -586,13 +586,13 @@ namespace optparse
         std::istringstream ss(val);
         std::stringstream err;
 
-        if (type() == "int" || type() == "long")
+        if (type() == "int" or type() == "long")
         {
             long t;
             if (not (ss >> t))
                 err << _("option") << " " << opt << ": " << _("invalid integer value") << ": '" << val << "'";
         }
-        else if (type() == "float" || type() == "double")
+        else if (type() == "float" or type() == "double")
         {
             double t;
             if (not (ss >> t))
@@ -618,7 +618,7 @@ namespace optparse
         return err.str();
     }
 
-    std::string Option::format_option_help(unsigned int indent /* = 2 */) const
+    std::string Option::format_option_help(const unsigned int indent) const
     {
         std::string mvar_short, mvar_long;
         if (nargs() == 1)
@@ -648,7 +648,7 @@ namespace optparse
         return ss.str();
     }
 
-    std::string Option::format_help(unsigned int indent /* = 2 */) const
+    std::string Option::format_help(const unsigned int indent) const
     {
         std::stringstream ss;
         std::string h = format_option_help(indent);
@@ -679,8 +679,8 @@ namespace optparse
     Option &Option::action(const std::string &a)
     {
         _action = a;
-        if (a == "store_const" || a == "store_true" || a == "store_false" ||
-                a == "append_const" || a == "count" || a == "help" || a == "version")
+        if (a == "store_const" or a == "store_true" or a == "store_false" or
+                a == "append_const" or a == "count" or a == "help" or a == "version")
             nargs(0);
         return *this;
     }
