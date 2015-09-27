@@ -77,10 +77,6 @@ class Values;
 class Value;
 class Callback;
 
-typedef std::map<std::string,std::string> strMap;
-typedef std::map<std::string,std::list<std::string> > lstMap;
-typedef std::map<std::string,Option const*> optMap;
-
 const char* const SUPPRESS_HELP = "SUPPRESS" "HELP";
 const char* const SUPPRESS_USAGE = "SUPPRESS" "USAGE";
 
@@ -121,8 +117,8 @@ class Values {
     const std::list<std::string>& all(const std::string& d) const { return _appendMap.find(d)->second; }
 
   private:
-    strMap _map;
-    lstMap _appendMap;
+    std::map<std::string, std::string> _map;
+    std::map<std::string, std::list<std::string> > _appendMap;
     std::set<std::string> _userSet;
 };
 
@@ -210,9 +206,9 @@ class OptionParser {
     Values _values;
 
     std::list<Option> _opts;
-    optMap _optmap_s;
-    optMap _optmap_l;
-    strMap _defaults;
+    std::map<std::string, Option const*> _optmap_s;
+    std::map<std::string, Option const*> _optmap_l;
+    std::map<std::string, std::string> _defaults;
     std::list<OptionGroup const*> _groups;
 
     std::list<std::string> _remaining;

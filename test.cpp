@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     " non numquam eius modi tempora incidunt ut labore et dolore magnam"
     " aliquam quaerat voluptatem.";
 
-  OptionParser parser = OptionParser()
+  optparse::OptionParser parser = optparse::OptionParser()
     .usage(usage)
     .version(version)
     .description(desc)
@@ -100,19 +100,19 @@ int main(int argc, char *argv[])
   parser.add_option("-C", "--choices") .choices(&choices[0], &choices[3]);
   parser.add_option("-m", "--more") .action("append");
   parser.add_option("--more-milk") .action("append_const") .set_const("milk");
-  parser.add_option("--hidden") .help(SUPPRESS_HELP);
+  parser.add_option("--hidden") .help(optparse::SUPPRESS_HELP);
 
   MyCallback mc;
   parser.add_option("-K", "--callback") .action("callback") .callback(mc) .help("callback test");
 
-  OptionGroup group = OptionGroup("Dangerous Options",
+  optparse::OptionGroup group = optparse::OptionGroup("Dangerous Options",
       "Caution: use these options at your own risk. "
       "It is believed that some of them bite.");
   group.add_option("-g") .action("store_true") .help("Group option.") .set_default("0");
   parser.add_option_group(group);
 
-  Values& options = parser.parse_args(argc, argv);
-  vector<std::string> args = parser.args();
+  optparse::Values& options = parser.parse_args(argc, argv);
+  std::vector<std::string> args = parser.args();
 
   std::cout << "clear: " << (options.get("no_clear") ? "false" : "true") << std::endl;
   std::cout << "string: " << options["string"] << std::endl;
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
   std::cout << "number: " << (int) options.get("number") << std::endl;
   std::cout << "int: " << (int) options.get("int") << std::endl;
   std::cout << "float: " << (float) options.get("float") << std::endl;
-  complex<double> c = 0;
+  std::complex<double> c = 0;
   if (options.is_set("complex")) {
     std::stringstream ss;
     ss << options["complex"];
@@ -135,14 +135,14 @@ int main(int argc, char *argv[])
   std::cout << "more_milk: ";
   {
     Output out(", ");
-    for (Values::iterator it = options.all("more_milk").begin(); it != options.all("more_milk").end(); ++it)
+    for (optparse::Values::iterator it = options.all("more_milk").begin(); it != options.all("more_milk").end(); ++it)
       out(*it);
   }
   std::cout << "hidden: " << options["hidden"] << std::endl;
   std::cout << "group: " << (options.get("g") ? "true" : "false") << std::endl;
 
   std::cout << std::endl << "leftover arguments: " << std::endl;
-  for (vector<std::string>::const_iterator it = args.begin(); it != args.end(); ++it) {
+  for (std::vector<std::string>::const_iterator it = args.begin(); it != args.end(); ++it) {
     std::cout << "arg: " << *it << std::endl;
   }
 
