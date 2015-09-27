@@ -241,7 +241,7 @@ namespace optparse
 
     const Option &OptionParser::lookup_long_opt(const std::string &opt) const
     {
-        std::list<std::string> matching;
+        std::vector<std::string> matching;
         for (std::map<std::string, Option const *>::const_iterator it = _optmap_l.begin(); it != _optmap_l.end(); ++it)
         {
             if (it->first.compare(0, opt.length(), opt) == 0)
