@@ -552,9 +552,9 @@ namespace optparse
     void Values::is_set_by_user(const std::string &d, bool yes)
     {
         if (yes)
-            _userSet.insert(d);
+            _user_set.insert(d);
         else
-            _userSet.erase(d);
+            _user_set.erase(d);
     }
 ////////// } class Values //////////
 
