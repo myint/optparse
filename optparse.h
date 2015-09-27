@@ -23,10 +23,6 @@ namespace optparse
     class Callback;
 
 
-    const char *const SUPPRESS_HELP = "SUPPRESS" "HELP";
-    const char *const SUPPRESS_USAGE = "SUPPRESS" "USAGE";
-
-
     // Class for automatic conversion from string -> anytype
     class Value
     {

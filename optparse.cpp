@@ -336,7 +336,9 @@ namespace optparse
                 _remaining.pop_front();
                 _leftover.push_back(arg);
                 if (not interspersed_args())
+                {
                     break;
+                }
             }
         }
         while (not _remaining.empty())
@@ -349,13 +351,17 @@ namespace optparse
         for (std::map<std::string, std::string>::const_iterator it = _defaults.begin(); it != _defaults.end(); ++it)
         {
             if (not _values.is_set(it->first))
+            {
                 _values[it->first] = it->second;
+            }
         }
 
         for (std::list<Option>::const_iterator it = _opts.begin(); it != _opts.end(); ++it)
         {
             if (it->get_default() != "" and not _values.is_set(it->dest()))
+            {
                 _values[it->dest()] = it->get_default();
+            }
         }
 
         for (std::list<OptionGroup const *>::iterator group_it = _groups.begin(); group_it != _groups.end(); ++group_it)
@@ -363,13 +369,17 @@ namespace optparse
             for (std::map<std::string, std::string>::const_iterator it = (*group_it)->_defaults.begin(); it != (*group_it)->_defaults.end(); ++it)
             {
                 if (not _values.is_set(it->first))
+                {
                     _values[it->first] = it->second;
+                }
             }
 
             for (std::list<Option>::const_iterator it = (*group_it)->_opts.begin(); it != (*group_it)->_opts.end(); ++it)
             {
                 if (it->get_default() != "" and not _values.is_set(it->dest()))
+                {
                     _values[it->dest()] = it->get_default();
+                }
             }
         }
 
@@ -382,7 +392,9 @@ namespace optparse
         {
             std::string err = o.check_type(opt, value);
             if (err != "")
+            {
                 error(err);
+            }
             _values[o.dest()] = value;
             _values.is_set_by_user(o.dest(), true);
         }
@@ -442,12 +454,13 @@ namespace optparse
         std::stringstream ss;
 
         if (_opts.empty())
+        {
             return ss.str();
+        }
 
         for (std::list<Option>::const_iterator it = _opts.begin(); it != _opts.end(); ++it)
         {
-            if (it->help() != SUPPRESS_HELP)
-                ss << it->format_help(indent);
+            ss << it->format_help(indent);
         }
 
         return ss.str();
@@ -457,11 +470,12 @@ namespace optparse
     {
         std::stringstream ss;
 
-        if (usage() != SUPPRESS_USAGE)
-            ss << get_usage() << std::endl;
+        ss << get_usage() << std::endl;
 
         if (description() != "")
+        {
             ss << str_format(description(), 0, cols()) << std::endl;
+        }
 
         ss << _("Options") << ":" << std::endl;
         ss << format_option_help();
@@ -476,7 +490,9 @@ namespace optparse
         }
 
         if (epilog() != "")
+        {
             ss << std::endl << str_format(epilog(), 0, cols());
+        }
 
         return ss.str();
     }
@@ -490,9 +506,13 @@ namespace optparse
         std::string lower = u;
         transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
         if (lower.compare(0, 7, "usage: ") == 0)
+        {
             _usage = u.substr(7);
+        }
         else
+        {
             _usage = u;
+        }
     }
     std::string OptionParser::format_usage(const std::string &u) const
     {
@@ -502,15 +522,15 @@ namespace optparse
     }
     std::string OptionParser::get_usage() const
     {
-        if (usage() == SUPPRESS_USAGE)
-            return std::string("");
         return format_usage(str_replace(usage(), "%prog", prog()));
     }
     void OptionParser::print_usage(std::ostream &out) const
     {
         std::string u = get_usage();
         if (u != "")
+        {
             out << u << std::endl;
+        }
     }
     void OptionParser::print_usage() const
     {
@@ -552,9 +572,13 @@ namespace optparse
     void Values::is_set_by_user(const std::string &d, bool yes)
     {
         if (yes)
+        {
             _user_set.insert(d);
+        }
         else
+        {
             _user_set.erase(d);
+        }
     }
 ////////// } class Values //////////
 

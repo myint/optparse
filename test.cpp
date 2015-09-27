@@ -53,11 +53,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-#ifndef DISABLE_USAGE
     const std::string usage = "usage: %prog [OPTION]... DIR [FILE]...";
-#else
-    const std::string usage = SUPPRESS_USAGE;
-#endif
     const std::string version =
         "%prog 1.0\nCopyright (C) 2010 Johannes Weißl\n"
         "License GPLv3+: GNU GPL version 3 or later "
@@ -117,7 +113,6 @@ int main(int argc, char *argv[])
     parser.add_option("-C", "--choices").choices(&choices[0], &choices[3]);
     parser.add_option("-m", "--more").action("append");
     parser.add_option("--more-milk").action("append_const").set_const("milk");
-    parser.add_option("--hidden").help(optparse::SUPPRESS_HELP);
 
     MyCallback mc;
     parser.add_option("-K", "--callback").action("callback").callback(mc).help("callback test");
