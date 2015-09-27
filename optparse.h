@@ -7,9 +7,11 @@
  * This is yet another option parser for C++. It is modelled after the
  * excellent Python optparse API. Although incomplete, anyone familiar to
  * optparse should feel at home:
+
  * http://docs.python.org/library/optparse.html
  *
  * Design decisions:
+
  * - elegant and easy usage more important than speed / flexibility
  * - shortness more important than feature completeness
  *   * no unicode
@@ -22,6 +24,7 @@
  * Why not use Boost.Program_options?
  * - boost not installed on all target platforms (esp. cluster, HPC, ...)
  * - too big to include just for option handling:
+
  *   322 *.h (44750 lines) + 7 *.cpp (2078 lines)
  *
  * Why not use tclap/Opag/Options/CmdLine/Anyoption/Argument_helper/...?
@@ -29,15 +32,18 @@
  * - similarity to Python desired for faster learning curve
  *
  * Future work:
+
  * - nargs > 1?
  * - comments?
  *
  * Python only features:
+
  * - conflict handlers
  * - adding new actions
  *
  *
  * Example:
+
  *
  * using optparse::OptionParser;
  *
@@ -85,6 +91,7 @@ namespace optparse
     class Value
     {
     public:
+
         Value() : str(), valid(false) {}
         Value(const std::string &v) : str(v), valid(true) {}
         operator const char *()
@@ -142,13 +149,16 @@ namespace optparse
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
     private:
+
         const std::string str;
         bool valid;
     };
 
+
     class Values
     {
     public:
+
         Values() : _map() {}
         const std::string &operator[] (const std::string &d) const;
         std::string &operator[] (const std::string &d)
@@ -181,14 +191,17 @@ namespace optparse
         }
 
     private:
+
         std::map<std::string, std::string> _map;
         std::map<std::string, std::list<std::string> > _appendMap;
         std::set<std::string> _userSet;
     };
 
+
     class OptionParser
     {
     public:
+
         OptionParser();
         virtual ~OptionParser() {}
 
@@ -324,6 +337,7 @@ namespace optparse
         void exit() const;
 
     private:
+
         const Option &lookup_short_opt(const std::string &opt) const;
         const Option &lookup_long_opt(const std::string &opt) const;
 
@@ -355,10 +369,13 @@ namespace optparse
         std::list<std::string> _leftover;
     };
 
+
     class OptionGroup : public OptionParser
     {
     public:
+
         OptionGroup(const std::string &t, const std::string &d = "") :
+
             _title(t), _group_description(d) {}
         virtual ~OptionGroup() {}
 
@@ -382,13 +399,16 @@ namespace optparse
         }
 
     private:
+
         std::string _title;
         std::string _group_description;
     };
 
+
     class Option
     {
     public:
+
         Option() : _action("store"), _type("string"), _nargs(1), _callback(0) {}
         virtual ~Option() {}
 
@@ -491,6 +511,7 @@ namespace optparse
         }
 
     private:
+
         std::string check_type(const std::string &opt, const std::string &val) const;
         std::string format_option_help(unsigned int indent = 2) const;
         std::string format_help(unsigned int indent = 2) const;
@@ -512,16 +533,17 @@ namespace optparse
         friend class OptionParser;
     };
 
+
     class Callback
     {
     public:
+
         virtual void operator() (const Option &option,
                                  const std::string &opt,
                                  const std::string &val,
                                  const OptionParser &parser) = 0;
         virtual ~Callback() {}
     };
-
 }
 
 #endif
