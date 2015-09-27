@@ -215,7 +215,6 @@ namespace optparse
 
     void OptionParser::handle_short_opt(const std::string &opt, const std::string &arg)
     {
-
         _remaining.pop_front();
         std::string value;
 
@@ -242,7 +241,6 @@ namespace optparse
 
     const Option &OptionParser::lookup_long_opt(const std::string &opt) const
     {
-
         std::list<std::string> matching;
         for (std::map<std::string, Option const *>::const_iterator it = _optmap_l.begin(); it != _optmap_l.end(); ++it)
         {
@@ -262,7 +260,6 @@ namespace optparse
 
     void OptionParser::handle_long_opt(const std::string &optstr)
     {
-
         _remaining.pop_front();
         std::string opt, value;
 
@@ -299,7 +296,6 @@ namespace optparse
     }
     Values &OptionParser::parse_args(const std::vector<std::string> &v)
     {
-
         _remaining.assign(v.begin(), v.end());
 
         if (add_version_option() and version() != "")
@@ -364,7 +360,7 @@ namespace optparse
             }
         }
 
-        for (std::list<OptionGroup const *>::iterator group_it = _groups.begin(); group_it != _groups.end(); ++group_it)
+        for (std::vector<OptionGroup const *>::iterator group_it = _groups.begin(); group_it != _groups.end(); ++group_it)
         {
             for (std::map<std::string, std::string>::const_iterator it = (*group_it)->_defaults.begin(); it != (*group_it)->_defaults.end(); ++it)
             {
@@ -480,7 +476,9 @@ namespace optparse
         ss << _("Options") << ":" << std::endl;
         ss << format_option_help();
 
-        for (std::list<OptionGroup const *>::const_iterator it = _groups.begin(); it != _groups.end(); ++it)
+        for (std::vector<OptionGroup const *>::const_iterator it = _groups.begin();
+             it != _groups.end();
+             ++it)
         {
             const OptionGroup &group = **it;
             ss << std::endl << "  " << group.title() << ":" << std::endl;
@@ -622,7 +620,6 @@ namespace optparse
 
     std::string Option::format_option_help(unsigned int indent /* = 2 */) const
     {
-
         std::string mvar_short, mvar_long;
         if (nargs() == 1)
         {

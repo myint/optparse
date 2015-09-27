@@ -254,17 +254,13 @@ namespace optparse
             return parse_args(std::vector<std::string>(begin, end));
         }
 
-        const std::list<std::string> &args() const
+        const std::vector<std::string> &args() const
         {
             return _leftover;
         }
-        std::vector<std::string> args()
-        {
-            return std::vector<std::string>(_leftover.begin(), _leftover.end());
-        }
 
         std::string format_help() const;
-        std::string format_option_help(unsigned int indent = 2) const;
+        std::string format_option_help(unsigned int indent=2) const;
         void print_help() const;
 
         void set_usage(const std::string &u);
@@ -306,10 +302,10 @@ namespace optparse
         std::map<std::string, Option const *> _optmap_s;
         std::map<std::string, Option const *> _optmap_l;
         std::map<std::string, std::string> _defaults;
-        std::list<OptionGroup const *> _groups;
+        std::vector<OptionGroup const *> _groups;
 
         std::list<std::string> _remaining;
-        std::list<std::string> _leftover;
+        std::vector<std::string> _leftover;
     };
 
 
@@ -317,7 +313,7 @@ namespace optparse
     {
     public:
 
-        OptionGroup(const std::string &t, const std::string &d = "") :
+        OptionGroup(const std::string &t, const std::string &d="") :
 
             _title(t), _group_description(d) {}
         virtual ~OptionGroup() {}
@@ -456,8 +452,8 @@ namespace optparse
     private:
 
         std::string check_type(const std::string &opt, const std::string &val) const;
-        std::string format_option_help(unsigned int indent = 2) const;
-        std::string format_help(unsigned int indent = 2) const;
+        std::string format_option_help(unsigned int indent=2) const;
+        std::string format_help(unsigned int indent=2) const;
 
         std::set<std::string> _short_opts;
         std::set<std::string> _long_opts;
