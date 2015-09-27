@@ -146,7 +146,6 @@ namespace optparse
     public:
 
         OptionParser();
-        virtual ~OptionParser() {}
 
         OptionParser &usage(const std::string &u)
         {
@@ -314,9 +313,7 @@ namespace optparse
     public:
 
         OptionGroup(const std::string &t, const std::string &d="") :
-
             _title(t), _group_description(d) {}
-        virtual ~OptionGroup() {}
 
         OptionGroup &title(const std::string &t)
         {
@@ -349,7 +346,6 @@ namespace optparse
     public:
 
         Option() : _action("store"), _type("string"), _nargs(1), _callback(0) {}
-        virtual ~Option() {}
 
         Option &action(const std::string &a);
         Option &type(const std::string &t)
@@ -477,10 +473,10 @@ namespace optparse
     {
     public:
 
-        virtual void operator() (const Option &option,
-                                 const std::string &opt,
-                                 const std::string &val,
-                                 const OptionParser &parser) = 0;
+        virtual void operator()(const Option &option,
+                                const std::string &opt,
+                                const std::string &val,
+                                const OptionParser &parser) = 0;
         virtual ~Callback() {}
     };
 }
