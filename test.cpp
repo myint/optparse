@@ -51,37 +51,40 @@ int main(int argc, char *argv[])
 #else
     const std::string usage = SUPPRESS_USAGE;
 #endif
-    const std::string version = "%prog 1.0\nCopyright (C) 2010 Johannes Weißl\n"
-                                "License GPLv3+: GNU GPL version 3 or later "
-                                "<http://gnu.org/licenses/gpl.html>.\n"
-                                "This is free software: you are free to change and redistribute it.\n"
-                                "There is NO WARRANTY, to the extent permitted by law.";
-    const std::string desc = "Lorem ipsum dolor sit amet, consectetur adipisicing"
-                             " elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
-                             " aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco"
-                             " laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor"
-                             " in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
-                             " pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa"
-                             " qui officia deserunt mollit anim id est laborum.";
-    const std::string epilog = "Sed ut perspiciatis unde omnis iste natus error sit"
-                               " voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque"
-                               " ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae"
-                               " dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit"
-                               " aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos"
-                               " qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui"
-                               " dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia"
-                               " non numquam eius modi tempora incidunt ut labore et dolore magnam"
-                               " aliquam quaerat voluptatem.";
+    const std::string version =
+        "%prog 1.0\nCopyright (C) 2010 Johannes Weißl\n"
+        "License GPLv3+: GNU GPL version 3 or later "
+        "<http://gnu.org/licenses/gpl.html>.\n"
+        "This is free software: you are free to change and redistribute it.\n"
+        "There is NO WARRANTY, to the extent permitted by law.";
+    const std::string desc =
+        "Lorem ipsum dolor sit amet, consectetur adipisicing"
+        " elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
+        " aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco"
+        " laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor"
+        " in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
+        " pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa"
+        " qui officia deserunt mollit anim id est laborum.";
+    const std::string epilog =
+        "Sed ut perspiciatis unde omnis iste natus error sit"
+        " voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque"
+        " ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae"
+        " dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit"
+        " aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos"
+        " qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui"
+        " dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia"
+        " non numquam eius modi tempora incidunt ut labore et dolore magnam"
+        " aliquam quaerat voluptatem.";
 
     optparse::OptionParser parser = optparse::OptionParser()
-                                    .usage(usage)
-                                    .version(version)
-                                    .description(desc)
-                                    .epilog(epilog)
+        .usage(usage)
+        .version(version)
+        .description(desc)
+        .epilog(epilog)
 #ifdef DISABLE_INTERSPERSED_ARGS
-                                    .disable_interspersed_args()
+        .disable_interspersed_args()
 #endif
-                                    ;
+    ;
 
     parser.set_defaults("verbosity", "50");
     parser.set_defaults("no_clear", "0");
@@ -90,10 +93,10 @@ int main(int argc, char *argv[])
     parser.add_option("--clear") .action("store_false") .dest("no_clear") .help("clear (default)");
     parser.add_option("--no-clear") .action("store_true") .help("not clear");
     parser.add_option("--string")
-    .help("This is a really long text... very long indeed! It must be wrapped on normal terminals.");
+        .help("This is a really long text... very long indeed! It must be wrapped on normal terminals.");
     parser.add_option("-x", "--clause", "--sentence") .metavar("SENTENCE") .set_default("I'm a sentence")
-    .help("This is a really long text... very long indeed! It must be wrapped on normal terminals. "
-          "Also it should appear not on the same line as the option.");
+        .help("This is a really long text... very long indeed! It must be wrapped on normal terminals. "
+              "Also it should appear not on the same line as the option.");
     parser.add_option("-k") .action("count") .help("how many times?");
     parser.add_option("-v", "--verbose") .action("store_const") .set_const("100") .dest("verbosity") .help("be verbose!");
     parser.add_option("-s", "--silent") .action("store_const") .set_const("0") .dest("verbosity") .help("be silent!");
