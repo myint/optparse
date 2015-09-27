@@ -304,13 +304,13 @@ Values& OptionParser::parse_args(const std::vector<std::string>& v) {
         _values[it->dest()] = it->get_default();
   }
 
-  for (list<OptionGroup const*>::iterator group_it = _groups.begin(); group_it != _groups.end(); ++group_it) {
-      for (strMap::const_iterator it = (*group_it)->_defaults.begin(); it != (*group_it)->_defaults.end(); ++it) {
+  for (std::list<OptionGroup const*>::iterator group_it = _groups.begin(); group_it != _groups.end(); ++group_it) {
+      for (std::map<std::string, std::string>::const_iterator it = (*group_it)->_defaults.begin(); it != (*group_it)->_defaults.end(); ++it) {
           if (not _values.is_set(it->first))
               _values[it->first] = it->second;
       }
-      
-      for (list<Option>::const_iterator it = (*group_it)->_opts.begin(); it != (*group_it)->_opts.end(); ++it) {
+
+      for (std::list<Option>::const_iterator it = (*group_it)->_opts.begin(); it != (*group_it)->_opts.end(); ++it) {
           if (it->get_default() != "" and not _values.is_set(it->dest()))
               _values[it->dest()] = it->get_default();
       }
