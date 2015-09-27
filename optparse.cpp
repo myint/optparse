@@ -24,9 +24,10 @@ namespace optparse
     class str_wrap
     {
     public:
+
         str_wrap(const std::string &l, const std::string &r) : lwrap(l), rwrap(r) {}
-        str_wrap(const std::string &w) : lwrap(w), rwrap(w) {}
-        std::string operator() (const std::string &s)
+        explicit str_wrap(const std::string &w) : lwrap(w), rwrap(w) {}
+        std::string operator()(const std::string &s)
         {
             return lwrap + s + rwrap;
         }

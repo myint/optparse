@@ -29,7 +29,7 @@ namespace optparse
     public:
 
         Value() : str(), valid(false) {}
-        Value(const std::string &v) : str(v), valid(true) {}
+        explicit Value(const std::string &v) : str(v), valid(true) {}
         operator const char *()
         {
             return str.c_str();

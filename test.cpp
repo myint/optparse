@@ -11,8 +11,8 @@ class Output
 {
 public:
 
-    Output(const std::string &d) : delim(d), first(true) {}
-    void operator() (const std::string &s)
+    explicit Output(const std::string &d) : delim(d), first(true) {}
+    void operator()(const std::string &s)
     {
         if (first)
         {
@@ -37,7 +37,7 @@ class MyCallback : public optparse::Callback
 {
 public:
     MyCallback() : counter(0) {}
-    void operator() (const optparse::Option &option, const std::string &opt, const std::string &val, const optparse::OptionParser &parser)
+    void operator()(const optparse::Option &option, const std::string &opt, const std::string &val, const optparse::OptionParser &parser)
     {
         counter++;
         std::cout << "--- MyCallback --- " << counter << ". time called" << std::endl;
