@@ -1,5 +1,5 @@
 WARN_FLAGS = \
-	-O3 -g -Wall -Wextra -Wabi -Wctor-dtor-privacy \
+	-std=c++98 -O3 -g -Wall -Wextra -Wabi -Wctor-dtor-privacy \
 	-Wnon-virtual-dtor -Wreorder -Woverloaded-virtual -Wshadow \
 	-Wcast-align -Wpointer-arith -Wwrite-strings -Wundef \
 	-Wredundant-decls -Werror
