@@ -111,7 +111,7 @@ namespace optparse
         }
         bool is_set_by_user(const std::string &d) const
         {
-            return _userSet.find(d) != _userSet.end();
+            return _user_set.find(d) != _user_set.end();
         }
         void is_set_by_user(const std::string &d, bool yes);
         Value get(const std::string &d) const
@@ -123,18 +123,18 @@ namespace optparse
         typedef std::list<std::string>::const_iterator const_iterator;
         std::list<std::string> &all(const std::string &d)
         {
-            return _appendMap[d];
+            return _append_map[d];
         }
         const std::list<std::string> &all(const std::string &d) const
         {
-            return _appendMap.find(d)->second;
+            return _append_map.find(d)->second;
         }
 
     private:
 
         std::map<std::string, std::string> _map;
-        std::map<std::string, std::list<std::string> > _appendMap;
-        std::set<std::string> _userSet;
+        std::map<std::string, std::list<std::string> > _append_map;
+        std::set<std::string> _user_set;
     };
 
 
