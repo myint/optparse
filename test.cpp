@@ -97,36 +97,36 @@ int main(int argc, char *argv[])
     parser.set_defaults("no_clear", "0");
 
     // test all actions
-    parser.add_option("--clear") .action("store_false") .dest("no_clear") .help("clear (default)");
-    parser.add_option("--no-clear") .action("store_true") .help("not clear");
+    parser.add_option("--clear").action("store_false").dest("no_clear").help("clear (default)");
+    parser.add_option("--no-clear").action("store_true").help("not clear");
     parser.add_option("--string")
         .help("This is a really long text... very long indeed! It must be wrapped on normal terminals.");
-    parser.add_option("-x", "--clause", "--sentence") .metavar("SENTENCE") .set_default("I'm a sentence")
+    parser.add_option("-x", "--clause", "--sentence").metavar("SENTENCE").set_default("I'm a sentence")
         .help("This is a really long text... very long indeed! It must be wrapped on normal terminals. "
               "Also it should appear not on the same line as the option.");
-    parser.add_option("-k") .action("count") .help("how many times?");
-    parser.add_option("-v", "--verbose") .action("store_const") .set_const("100") .dest("verbosity") .help("be verbose!");
-    parser.add_option("-s", "--silent") .action("store_const") .set_const("0") .dest("verbosity") .help("be silent!");
-    parser.add_option("-n", "--number") .type("int") .set_default("1") .metavar("NUM") .help("number of files (default: %default)");
-    parser.add_option("-H") .action("help") .help("alternative help");
-    parser.add_option("-V") .action("version") .help("alternative version");
-    parser.add_option("-i", "--int") .action("store") .type("int") .set_default(3) .help("default: %default");
-    parser.add_option("-f", "--float") .action("store") .type("float") .set_default(5.3) .help("default: %default");
-    parser.add_option("-c", "--complex") .action("store") .type("complex");
+    parser.add_option("-k").action("count").help("how many times?");
+    parser.add_option("-v", "--verbose").action("store_const").set_const("100").dest("verbosity").help("be verbose!");
+    parser.add_option("-s", "--silent").action("store_const").set_const("0").dest("verbosity").help("be silent!");
+    parser.add_option("-n", "--number").type("int").set_default("1").metavar("NUM").help("number of files (default: %default)");
+    parser.add_option("-H").action("help").help("alternative help");
+    parser.add_option("-V").action("version").help("alternative version");
+    parser.add_option("-i", "--int").action("store").type("int").set_default(3).help("default: %default");
+    parser.add_option("-f", "--float").action("store").type("float").set_default(5.3).help("default: %default");
+    parser.add_option("-c", "--complex").action("store").type("complex");
     char const *const choices[] = {"foo", "bar", "baz"};
-    parser.add_option("-C", "--choices") .choices(&choices[0], &choices[3]);
-    parser.add_option("-m", "--more") .action("append");
-    parser.add_option("--more-milk") .action("append_const") .set_const("milk");
-    parser.add_option("--hidden") .help(optparse::SUPPRESS_HELP);
+    parser.add_option("-C", "--choices").choices(&choices[0], &choices[3]);
+    parser.add_option("-m", "--more").action("append");
+    parser.add_option("--more-milk").action("append_const").set_const("milk");
+    parser.add_option("--hidden").help(optparse::SUPPRESS_HELP);
 
     MyCallback mc;
-    parser.add_option("-K", "--callback") .action("callback") .callback(mc) .help("callback test");
+    parser.add_option("-K", "--callback").action("callback").callback(mc).help("callback test");
 
     optparse::OptionGroup group = optparse::OptionGroup(
         "Dangerous Options",
         "Caution: use these options at your own risk. "
         "It is believed that some of them bite.");
-    group.add_option("-g") .action("store_true") .help("Group option.") .set_default("0");
+    group.add_option("-g").action("store_true").help("Group option.").set_default("0");
     parser.add_option_group(group);
 
     optparse::Values &options = parser.parse_args(argc, argv);
