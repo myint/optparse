@@ -1,22 +1,27 @@
 #include "optparse.h"
 
+#include <algorithm>
+#include <complex>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <complex>
-#include <algorithm>
 
 
 class Output
 {
 public:
+
     Output(const std::string &d) : delim(d), first(true) {}
     void operator() (const std::string &s)
     {
         if (first)
+        {
             first = false;
+        }
         else
+        {
             std::cout << delim;
+        }
         std::cout << s;
     }
     ~Output()
@@ -26,6 +31,7 @@ public:
     const std::string &delim;
     bool first;
 };
+
 
 class MyCallback : public optparse::Callback
 {
@@ -43,6 +49,7 @@ public:
     }
     int counter;
 };
+
 
 int main(int argc, char *argv[])
 {
@@ -106,7 +113,7 @@ int main(int argc, char *argv[])
     parser.add_option("-i", "--int") .action("store") .type("int") .set_default(3) .help("default: %default");
     parser.add_option("-f", "--float") .action("store") .type("float") .set_default(5.3) .help("default: %default");
     parser.add_option("-c", "--complex") .action("store") .type("complex");
-    char const *const choices[] = { "foo", "bar", "baz" };
+    char const *const choices[] = {"foo", "bar", "baz"};
     parser.add_option("-C", "--choices") .choices(&choices[0], &choices[3]);
     parser.add_option("-m", "--more") .action("append");
     parser.add_option("--more-milk") .action("append_const") .set_const("milk");
@@ -115,9 +122,10 @@ int main(int argc, char *argv[])
     MyCallback mc;
     parser.add_option("-K", "--callback") .action("callback") .callback(mc) .help("callback test");
 
-    optparse::OptionGroup group = optparse::OptionGroup("Dangerous Options",
-                                  "Caution: use these options at your own risk. "
-                                  "It is believed that some of them bite.");
+    optparse::OptionGroup group = optparse::OptionGroup(
+        "Dangerous Options",
+        "Caution: use these options at your own risk. "
+        "It is believed that some of them bite.");
     group.add_option("-g") .action("store_true") .help("Group option.") .set_default("0");
     parser.add_option_group(group);
 
@@ -129,9 +137,9 @@ int main(int argc, char *argv[])
     std::cout << "clause: " << options["clause"] << std::endl;
     std::cout << "k: " << options["k"] << std::endl;
     std::cout << "verbosity: " << options["verbosity"] << std::endl;
-    std::cout << "number: " << (int) options.get("number") << std::endl;
-    std::cout << "int: " << (int) options.get("int") << std::endl;
-    std::cout << "float: " << (float) options.get("float") << std::endl;
+    std::cout << "number: " << static_cast<int>(options.get("number")) << std::endl;
+    std::cout << "int: " << static_cast<int>(options.get("int")) << std::endl;
+    std::cout << "float: " << static_cast<float>(options.get("float")) << std::endl;
     std::complex<double> c = 0;
     if (options.is_set("complex"))
     {
@@ -140,7 +148,7 @@ int main(int argc, char *argv[])
         ss >> c;
     }
     std::cout << "complex: " << c << std::endl;
-    std::cout << "choices: " << (const char *) options.get("choices") << std::endl;
+    std::cout << "choices: " << static_cast<const char *>(options.get("choices")) << std::endl;
     std::cout << "more: ";
     for_each(options.all("more").begin(), options.all("more").end(), Output(", "));
     std::cout << "more_milk: ";
