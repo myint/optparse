@@ -57,8 +57,8 @@
  *
  */
 
-#ifndef OPTIONPARSER_H_
-#define OPTIONPARSER_H_
+#ifndef OPTPARSE_H
+#define OPTPARSE_H
 
 #include <string>
 #include <vector>
@@ -68,20 +68,20 @@
 #include <iostream>
 #include <sstream>
 
+
 namespace optparse
 {
-
     class OptionParser;
     class OptionGroup;
     class Option;
-    class Values;
-    class Value;
     class Callback;
+
 
     const char* const SUPPRESS_HELP = "SUPPRESS" "HELP";
     const char* const SUPPRESS_USAGE = "SUPPRESS" "USAGE";
 
-//! Class for automatic conversion from string -> anytype
+
+    // Class for automatic conversion from string -> anytype
     class Value
     {
     public:
