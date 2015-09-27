@@ -561,7 +561,7 @@ namespace optparse
 ////////// } class OptionParser //////////
 
 ////////// class Values { //////////
-    const std::string &Values::operator[] (const std::string &d) const
+    const std::string &Values::operator[](const std::string &d) const
     {
         std::map<std::string, std::string>::const_iterator it = _map.find(d);
         static const std::string empty = "";

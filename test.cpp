@@ -146,13 +146,13 @@ int main(int argc, char *argv[])
     std::cout << "choices: " << static_cast<const char *>(options.get("choices")) << std::endl;
     std::cout << "more: ";
     {
-        std::list<std::string> all = options.all("more");
+        const std::vector<std::string> &all = options.all("more");
         for_each(all.begin(), all.end(), Output(", "));
     }
 
     std::cout << "more_milk: ";
     {
-        std::list<std::string> all = options.all("more_milk");
+        const std::vector<std::string> &all = options.all("more_milk");
         Output out(", ");
         for (optparse::Values::const_iterator it = all.begin();
              it != all.end();

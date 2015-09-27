@@ -6,13 +6,13 @@
 #ifndef OPTPARSE_H
 #define OPTPARSE_H
 
-#include <string>
-#include <vector>
+#include <iostream>
 #include <list>
 #include <map>
 #include <set>
-#include <iostream>
 #include <sstream>
+#include <string>
+#include <vector>
 
 
 namespace optparse
@@ -23,7 +23,7 @@ namespace optparse
     class Callback;
 
 
-    // Class for automatic conversion from string -> anytype
+    // Class for automatic conversion from string -> anytype.
     class Value
     {
     public:
@@ -96,8 +96,8 @@ namespace optparse
     public:
 
         Values() : _map() {}
-        const std::string &operator[] (const std::string &d) const;
-        std::string &operator[] (const std::string &d)
+        const std::string &operator[](const std::string &d) const;
+        std::string &operator[](const std::string &d)
         {
             return _map[d];
         }
@@ -115,28 +115,26 @@ namespace optparse
             return (is_set(d)) ? Value((*this)[d]) : Value();
         }
 
-        typedef std::list<std::string>::iterator iterator;
-        typedef std::list<std::string>::const_iterator const_iterator;
+        typedef std::vector<std::string>::iterator iterator;
+        typedef std::vector<std::string>::const_iterator const_iterator;
 
-        std::list<std::string> &all(const std::string &d)
+        std::vector<std::string> &all(const std::string &d)
         {
             return _append_map[d];
         }
 
-        const std::list<std::string> all(const std::string &d) const
+        const std::vector<std::string> all(const std::string &d) const
         {
-            if (_append_map.count(d))
-            {
-                return _append_map.at(d);
-            }
-
-            return std::list<std::string>();
+            static const std::vector<std::string> empty;
+            return (_append_map.find(d) == _append_map.end()) ?
+                empty :
+                _append_map.at(d);
         }
 
     private:
 
         std::map<std::string, std::string> _map;
-        std::map<std::string, std::list<std::string> > _append_map;
+        std::map<std::string, std::vector<std::string> > _append_map;
         std::set<std::string> _user_set;
     };
 
