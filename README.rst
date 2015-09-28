@@ -2,6 +2,10 @@
 optparse
 ========
 
+.. image:: https://travis-ci.org/myint/optparse.svg?branch=master
+    :target: https://travis-ci.org/myint/optparse
+    :alt: Build status
+
 This is yet another option parser for C++. It is modelled after the
 excellent Python optparse API. Although incomplete, anyone familiar to
 optparse should feel at home:
