@@ -150,17 +150,17 @@ namespace optparse
 
     Option &OptionParser::add_option(const std::string &opt)
     {
-        const std::string tmp[1] = { opt };
+        const std::string tmp[1] = {opt};
         return add_option(std::vector<std::string>(&tmp[0], &tmp[1]));
     }
     Option &OptionParser::add_option(const std::string &opt1, const std::string &opt2)
     {
-        const std::string tmp[2] = { opt1, opt2 };
+        const std::string tmp[2] = {opt1, opt2};
         return add_option(std::vector<std::string>(&tmp[0], &tmp[2]));
     }
     Option &OptionParser::add_option(const std::string &opt1, const std::string &opt2, const std::string &opt3)
     {
-        const std::string tmp[3] = { opt1, opt2, opt3 };
+        const std::string tmp[3] = {opt1, opt2, opt3};
         return add_option(std::vector<std::string>(&tmp[0], &tmp[3]));
     }
     Option &OptionParser::add_option(const std::vector<std::string> &v)
@@ -301,12 +301,12 @@ namespace optparse
 
         if (add_version_option() and version() != "")
         {
-            add_option("--version") .action("version") .help(_("show program's version number and exit"));
+            add_option("--version").action("version").help(_("show program's version number and exit"));
             _opts.splice(_opts.begin(), _opts, --(_opts.end()));
         }
         if (add_help_option())
         {
-            add_option("-h", "--help") .action("help") .help(_("show this help message and exit"));
+            add_option("-h", "--help").action("help").help(_("show this help message and exit"));
             _opts.splice(_opts.begin(), _opts, --(_opts.end()));
         }
 
@@ -680,9 +680,16 @@ namespace optparse
     Option &Option::action(const std::string &a)
     {
         _action = a;
-        if (a == "store_const" or a == "store_true" or a == "store_false" or
-                a == "append_const" or a == "count" or a == "help" or a == "version")
+        if (a == "store_const" or
+            a == "store_true" or
+            a == "store_false" or
+            a == "append_const" or
+            a == "count" or
+            a == "help" or
+            a == "version")
+        {
             nargs(0);
+        }
         return *this;
     }
 ////////// } class Option //////////
