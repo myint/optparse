@@ -17,7 +17,6 @@
 
 namespace optparse
 {
-    class OptionParser;
     class OptionGroup;
     class Option;
     class Callback;
