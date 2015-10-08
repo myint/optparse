@@ -5,7 +5,7 @@ WARN_FLAGS = \
 	-Wredundant-decls -Werror
 
 BIN = test
-OBJECTS = optparse.o test.o
+OBJECTS = test.o
 
 $(BIN): $(OBJECTS)
 	$(CXX) -o $@ $(OBJECTS) $(WARN_FLAGS)
