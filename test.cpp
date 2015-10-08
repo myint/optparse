@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
     parser.add_option("-C", "--choices").choices(&choices[0], &choices[3]);
     parser.add_option("-m", "--more").action("append");
     parser.add_option("--more-milk").action("append_const").set_const("milk");
-    parser.add_option("--hidden").help("", true);
+    parser.add_option("--hidden").suppress_help();
 
     MyCallback mc;
     parser.add_option("-K", "--callback").action("callback").callback(mc).help("callback test");

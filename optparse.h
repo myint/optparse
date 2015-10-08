@@ -385,9 +385,13 @@ namespace optparse
             type("choice");
             return *this;
         }
-        Option &help(const std::string &h, const bool suppress=false)
+        Option &help(const std::string &h)
         {
             _help = h;
+            return *this;
+        }
+        Option &suppress_help(const bool suppress=true)
+        {
             _suppress_help = suppress;
             return *this;
         }
