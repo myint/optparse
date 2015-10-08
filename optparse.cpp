@@ -457,7 +457,10 @@ namespace optparse
 
         for (std::list<Option>::const_iterator it = _opts.begin(); it != _opts.end(); ++it)
         {
-            ss << it->format_help(indent);
+            if (not it->_suppress_help)
+            {
+                ss << it->format_help(indent);
+            }
         }
 
         return ss.str();

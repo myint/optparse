@@ -342,7 +342,7 @@ namespace optparse
     {
     public:
 
-        Option() : _action("store"), _type("string"), _nargs(1), _callback(0) {}
+        Option() : _action("store"), _type("string"), _nargs(1), _suppress_help(false), _callback(0) {}
 
         Option &action(const std::string &a);
         Option &type(const std::string &t)
@@ -385,9 +385,10 @@ namespace optparse
             type("choice");
             return *this;
         }
-        Option &help(const std::string &h)
+        Option &help(const std::string &h, const bool suppress=false)
         {
             _help = h;
+            _suppress_help = suppress;
             return *this;
         }
         Option &metavar(const std::string &m)
@@ -459,6 +460,7 @@ namespace optparse
         std::string _const;
         std::list<std::string> _choices;
         std::string _help;
+        bool _suppress_help;
         std::string _metavar;
         Callback *_callback;
 
