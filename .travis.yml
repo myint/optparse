@@ -11,3 +11,4 @@ script:
     - ./test
     - ./test --more-milk
     - ./test --invalid-option 2>&1 | grep 'no such option'
+    - ./test --complex='(1.2, 3.4)' | grep 'complex: (1.2,3.4)'
