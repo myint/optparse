@@ -984,7 +984,7 @@ namespace optparse
     void OptionParser::set_usage(const std::string &u)
     {
         std::string lower = u;
-        transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+        std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
         if (lower.compare(0, 7, "usage: ") == 0)
         {
             _usage = u.substr(7);
@@ -1083,7 +1083,7 @@ namespace optparse
             if (find(choices().begin(), choices().end(), val) == choices().end())
             {
                 std::list<std::string> tmp = choices();
-                transform(tmp.begin(), tmp.end(), tmp.begin(), detail::str_wrap("'"));
+                std::transform(tmp.begin(), tmp.end(), tmp.begin(), detail::str_wrap("'"));
                 err << "option" << " " << opt << ": " << "invalid choice" << ": '" << val << "'"
                     << " (" << "choose from" << " " << detail::str_join(", ", tmp.begin(), tmp.end()) << ")";
             }
@@ -1092,7 +1092,9 @@ namespace optparse
         {
             std::complex<double> t;
             if (not (ss >> t))
+            {
                 err << "option" << " " << opt << ": " << "invalid complex value" << ": '" << val << "'";
+            }
         }
 
         return err.str();
@@ -1107,7 +1109,7 @@ namespace optparse
             if (mvar == "")
             {
                 mvar = type();
-                transform(mvar.begin(), mvar.end(), mvar.begin(), ::toupper);
+                std::transform(mvar.begin(), mvar.end(), mvar.begin(), ::toupper);
             }
             mvar_short = " " + mvar;
             mvar_long = "=" + mvar;
