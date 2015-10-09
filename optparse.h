@@ -18,10 +18,6 @@
 #include <string>
 #include <vector>
 
-#if defined(ENABLE_NLS) && ENABLE_NLS
-#include <libintl.h>
-#endif
-
 
 namespace optparse
 {
@@ -623,14 +619,9 @@ namespace optparse
         }
     }
 
-#if defined(ENABLE_NLS) && ENABLE_NLS
-#define _(s) gettext(s)
-#else
-#define _(s) s
-#endif
 
     OptionParser::OptionParser() :
-        _usage(_("%prog [options]")),
+        _usage("%prog [options]"),
         _add_help_option(true),
         _add_version_option(true),
         _interspersed_args(true) {}
@@ -697,7 +688,7 @@ namespace optparse
     {
         std::map<std::string, Option const *>::const_iterator it = _optmap_s.find(opt);
         if (it == _optmap_s.end())
-            error(_("no such option") + std::string(": -") + opt);
+            error("no such option" + std::string(": -") + opt);
         return *it->second;
     }
 
@@ -713,7 +704,7 @@ namespace optparse
             if (value == "")
             {
                 if (_remaining.empty())
-                    error("-" + opt + " " + _("option requires an argument"));
+                    error("-" + opt + " " + "option requires an argument");
                 value = _remaining.front();
                 _remaining.pop_front();
             }
@@ -738,10 +729,10 @@ namespace optparse
         if (matching.size() > 1)
         {
             std::string x = detail::str_join(", ", matching.begin(), matching.end());
-            error(_("ambiguous option") + std::string(": --") + opt + " (" + x + "?)");
+            error("ambiguous option" + std::string(": --") + opt + " (" + x + "?)");
         }
         if (matching.size() == 0)
-            error(_("no such option") + std::string(": --") + opt);
+            error("no such option" + std::string(": --") + opt);
 
         return *_optmap_l.find(matching.front())->second;
     }
@@ -771,7 +762,7 @@ namespace optparse
         }
 
         if (option._nargs == 1 and value == "")
-            error("--" + opt + " " + _("option requires an argument"));
+            error("--" + opt + " " + "option requires an argument");
 
         process_opt(option, std::string("--") + opt, value);
     }
@@ -788,12 +779,12 @@ namespace optparse
 
         if (add_version_option() and version() != "")
         {
-            add_option("--version").action("version").help(_("show program's version number and exit"));
+            add_option("--version").action("version").help("show program's version number and exit");
             _opts.splice(_opts.begin(), _opts, --(_opts.end()));
         }
         if (add_help_option())
         {
-            add_option("-h", "--help").action("help").help(_("show this help message and exit"));
+            add_option("-h", "--help").action("help").help("show this help message and exit");
             _opts.splice(_opts.begin(), _opts, --(_opts.end()));
         }
 
@@ -964,7 +955,7 @@ namespace optparse
             ss << detail::str_format(description(), 0, detail::cols()) << std::endl;
         }
 
-        ss << _("Options") << ":" << std::endl;
+        ss << "Options" << ":" << std::endl;
         ss << format_option_help();
 
         for (std::vector<OptionGroup const *>::const_iterator it = _groups.begin();
@@ -1006,7 +997,7 @@ namespace optparse
     std::string OptionParser::format_usage(const std::string &u) const
     {
         std::stringstream ss;
-        ss << _("Usage") << ": " << u << std::endl;
+        ss << "Usage" << ": " << u << std::endl;
         return ss.str();
     }
     std::string OptionParser::get_usage() const
@@ -1046,7 +1037,7 @@ namespace optparse
     void OptionParser::error(const std::string &msg) const
     {
         print_usage(std::cerr);
-        std::cerr << prog() << ": " << _("error") << ": " << msg << std::endl;
+        std::cerr << prog() << ": " << "error" << ": " << msg << std::endl;
         exit();
     }
 
@@ -1079,13 +1070,13 @@ namespace optparse
         {
             long t;
             if (not (ss >> t))
-                err << _("option") << " " << opt << ": " << _("invalid integer value") << ": '" << val << "'";
+                err << "option" << " " << opt << ": " << "invalid integer value" << ": '" << val << "'";
         }
         else if (type() == "float" or type() == "double")
         {
             double t;
             if (not (ss >> t))
-                err << _("option") << " " << opt << ": " << _("invalid floating-point value") << ": '" << val << "'";
+                err << "option" << " " << opt << ": " << "invalid floating-point value" << ": '" << val << "'";
         }
         else if (type() == "choice")
         {
@@ -1093,15 +1084,15 @@ namespace optparse
             {
                 std::list<std::string> tmp = choices();
                 transform(tmp.begin(), tmp.end(), tmp.begin(), detail::str_wrap("'"));
-                err << _("option") << " " << opt << ": " << _("invalid choice") << ": '" << val << "'"
-                    << " (" << _("choose from") << " " << detail::str_join(", ", tmp.begin(), tmp.end()) << ")";
+                err << "option" << " " << opt << ": " << "invalid choice" << ": '" << val << "'"
+                    << " (" << "choose from" << " " << detail::str_join(", ", tmp.begin(), tmp.end()) << ")";
             }
         }
         else if (type() == "complex")
         {
             std::complex<double> t;
             if (not (ss >> t))
-                err << _("option") << " " << opt << ": " << _("invalid complex value") << ": '" << val << "'";
+                err << "option" << " " << opt << ": " << "invalid complex value" << ": '" << val << "'";
         }
 
         return err.str();
