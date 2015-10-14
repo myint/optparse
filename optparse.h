@@ -15,6 +15,7 @@
 #include <map>
 #include <set>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -374,6 +375,12 @@ namespace optparse
         }
         Option &nargs(size_t n)
         {
+            // This doesn't seem to be currently supported.
+            if (n > 1)
+            {
+                throw std::invalid_argument(
+                    "nargs greater than 1 not supported");
+            }
             _nargs = n;
             return *this;
         }
