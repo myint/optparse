@@ -33,56 +33,68 @@ namespace optparse
     public:
 
         Value() : str(), valid(false) {}
+
         explicit Value(const std::string &v) : str(v), valid(true) {}
+
         operator const char *()
         {
             return str.c_str();
         }
+
         operator bool()
         {
             bool t;
             return (valid && (std::istringstream(str) >> t)) ? t : false;
         }
+
         operator short()
         {
             short t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator unsigned short()
         {
             unsigned short t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator int()
         {
             int t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator unsigned int()
         {
             unsigned int t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator long()
         {
             long t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator unsigned long()
         {
             unsigned long t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator float()
         {
             float t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator double()
         {
             double t;
             return (valid && (std::istringstream(str) >> t)) ? t : 0;
         }
+
         operator long double()
         {
             long double t;
@@ -105,14 +117,17 @@ namespace optparse
         {
             return _map[d];
         }
+
         bool is_set(const std::string &d) const
         {
             return _map.find(d) != _map.end();
         }
+
         bool is_set_by_user(const std::string &d) const
         {
             return _user_set.find(d) != _user_set.end();
         }
+
         void is_set_by_user(const std::string &d, bool yes);
         Value get(const std::string &d) const
         {
@@ -154,41 +169,49 @@ namespace optparse
             set_usage(u);
             return *this;
         }
+
         OptionParser &version(const std::string &v)
         {
             _version = v;
             return *this;
         }
+
         OptionParser &description(const std::string &d)
         {
             _description = d;
             return *this;
         }
+
         OptionParser &add_help_option(bool h)
         {
             _add_help_option = h;
             return *this;
         }
+
         OptionParser &add_version_option(bool v)
         {
             _add_version_option = v;
             return *this;
         }
+
         OptionParser &prog(const std::string &p)
         {
             _prog = p;
             return *this;
         }
+
         OptionParser &epilog(const std::string &e)
         {
             _epilog = e;
             return *this;
         }
+
         OptionParser &set_defaults(const std::string &dest, const std::string &val)
         {
             _defaults[dest] = val;
             return *this;
         }
+
         template<typename T>
         OptionParser &set_defaults(const std::string &dest, T t)
         {
@@ -197,46 +220,56 @@ namespace optparse
             _defaults[dest] = ss.str();
             return *this;
         }
+
         OptionParser &enable_interspersed_args()
         {
             _interspersed_args = true;
             return *this;
         }
+
         OptionParser &disable_interspersed_args()
         {
             _interspersed_args = false;
             return *this;
         }
+
         OptionParser &add_option_group(const OptionGroup &group);
 
         const std::string &usage() const
         {
             return _usage;
         }
+
         const std::string &version() const
         {
             return _version;
         }
+
         const std::string &description() const
         {
             return _description;
         }
+
         bool add_help_option() const
         {
             return _add_help_option;
         }
+
         bool add_version_option() const
         {
             return _add_version_option;
         }
+
         const std::string &prog() const
         {
             return _prog;
         }
+
         const std::string &epilog() const
         {
             return _epilog;
         }
+
         bool interspersed_args() const
         {
             return _interspersed_args;
@@ -322,15 +355,18 @@ namespace optparse
             _title = t;
             return *this;
         }
+
         OptionGroup &group_description(const std::string &d)
         {
             _group_description = d;
             return *this;
         }
+
         const std::string &title() const
         {
             return _title;
         }
+
         const std::string &group_description() const
         {
             return _group_description;
@@ -350,21 +386,25 @@ namespace optparse
         Option() : _action("store"), _type("string"), _nargs(1), _suppress_help(false), _callback(0) {}
 
         Option &action(const std::string &a);
+
         Option &type(const std::string &t)
         {
             _type = t;
             return *this;
         }
+
         Option &dest(const std::string &d)
         {
             _dest = d;
             return *this;
         }
+
         Option &set_default(const std::string &d)
         {
             _default = d;
             return *this;
         }
+
         template<typename T>
         Option &set_default(T t)
         {
@@ -373,6 +413,7 @@ namespace optparse
             _default = ss.str();
             return *this;
         }
+
         Option &nargs(size_t n)
         {
             // This doesn't seem to be currently supported.
@@ -381,14 +422,17 @@ namespace optparse
                 throw std::invalid_argument(
                     "nargs greater than 1 not supported");
             }
+
             _nargs = n;
             return *this;
         }
+
         Option &set_const(const std::string &c)
         {
             _const = c;
             return *this;
         }
+
         template<typename InputIterator>
         Option &choices(InputIterator begin, InputIterator end)
         {
@@ -396,21 +440,25 @@ namespace optparse
             type("choice");
             return *this;
         }
+
         Option &help(const std::string &h)
         {
             _help = h;
             return *this;
         }
+
         Option &suppress_help(const bool suppress=true)
         {
             _suppress_help = suppress;
             return *this;
         }
+
         Option &metavar(const std::string &m)
         {
             _metavar = m;
             return *this;
         }
+
         Option &callback(Callback &c)
         {
             _callback = &c;
@@ -421,38 +469,47 @@ namespace optparse
         {
             return _action;
         }
+
         const std::string &type() const
         {
             return _type;
         }
+
         const std::string &dest() const
         {
             return _dest;
         }
+
         const std::string &get_default() const
         {
             return _default;
         }
+
         size_t nargs() const
         {
             return _nargs;
         }
+
         const std::string &get_const() const
         {
             return _const;
         }
+
         const std::list<std::string> &choices() const
         {
             return _choices;
         }
+
         const std::string &help() const
         {
             return _help;
         }
+
         const std::string &metavar() const
         {
             return _metavar;
         }
+
         Callback *callback() const
         {
             return _callback;
@@ -507,8 +564,11 @@ namespace optparse
                 {
                     return lwrap + s + rwrap;
                 }
+
                 const std::string lwrap, rwrap;
         };
+
+
         template<typename InputIterator, typename UnaryOperator>
         static std::string str_join_trans(const std::string &sep, InputIterator begin, InputIterator end, UnaryOperator op)
         {
@@ -516,16 +576,22 @@ namespace optparse
             for (InputIterator it = begin; it != end; ++it)
             {
                 if (it != begin)
+                {
                     buf += sep;
+                }
                 buf += op(*it);
             }
+
             return buf;
         }
+
+
         template<class InputIterator>
         static std::string str_join(const std::string &sep, InputIterator begin, InputIterator end)
         {
             return str_join_trans(sep, begin, end, str_wrap(""));
         }
+
         static std::string &str_replace(std::string &s, const std::string &patt, const std::string &repl)
         {
             size_t pos = 0, n = patt.length();
@@ -533,24 +599,33 @@ namespace optparse
             {
                 pos = s.find(patt, pos);
                 if (pos == std::string::npos)
+                {
                     break;
+                }
                 s.replace(pos, n, repl);
                 pos += repl.size();
             }
+
             return s;
         }
+
+
         static std::string str_replace(const std::string &s, const std::string &patt, const std::string &repl)
         {
             std::string tmp = s;
             str_replace(tmp, patt, repl);
             return tmp;
         }
+
+
         static std::string str_format(const std::string &s, size_t pre, size_t len, bool indent_first = true)
         {
             std::stringstream ss;
             std::string p;
             if (indent_first)
+            {
                 p = std::string(pre, ' ');
+            }
 
             size_t pos = 0, linestart = 0;
             size_t line = 0;
@@ -563,26 +638,33 @@ namespace optparse
                 {
                     break;
                 }
+
                 if (s[new_pos] == '\n')
                 {
                     pos = new_pos + 1;
                     wrap = true;
                 }
+
                 if (line == 1)
                 {
                     p = std::string(pre, ' ');
                 }
+
                 if (wrap or new_pos + pre > linestart + len)
                 {
                     ss << p << s.substr(linestart, pos - linestart - 1) << std::endl;
                     linestart = pos;
                     line++;
                 }
+
                 pos = new_pos + 1;
             }
+
             ss << p << s.substr(linestart) << std::endl;
             return ss.str();
         }
+
+
         static std::string str_inc(const std::string &s)
         {
             std::stringstream ss;
@@ -592,6 +674,8 @@ namespace optparse
             ss << i + 1;
             return ss.str();
         }
+
+
         static unsigned int cols()
         {
             unsigned int n = 80;
@@ -604,6 +688,8 @@ namespace optparse
 #endif
             return n;
         }
+
+
         static std::string basename(const std::string &s)
         {
             std::string b = s;
@@ -614,14 +700,17 @@ namespace optparse
                 {
                     b.erase(1);
                 }
+
                 return b;
             }
+
             b.erase(i + 1, b.length() - i - 1);
             i = b.find_last_of("/");
             if (i != std::string::npos)
             {
                 b.erase(0, i + 1);
             }
+
             return b;
         }
     }
@@ -631,23 +720,28 @@ namespace optparse
         _usage("%prog [options]"),
         _add_help_option(true),
         _add_version_option(true),
-        _interspersed_args(true) {}
+        _interspersed_args(true)
+    {
+    }
 
     Option &OptionParser::add_option(const std::string &opt)
     {
         const std::string tmp[1] = {opt};
         return add_option(std::vector<std::string>(&tmp[0], &tmp[1]));
     }
+
     Option &OptionParser::add_option(const std::string &opt1, const std::string &opt2)
     {
         const std::string tmp[2] = {opt1, opt2};
         return add_option(std::vector<std::string>(&tmp[0], &tmp[2]));
     }
+
     Option &OptionParser::add_option(const std::string &opt1, const std::string &opt2, const std::string &opt3)
     {
         const std::string tmp[3] = {opt1, opt2, opt3};
         return add_option(std::vector<std::string>(&tmp[0], &tmp[3]));
     }
+
     Option &OptionParser::add_option(const std::vector<std::string> &v)
     {
         _opts.resize(_opts.size() + 1);
@@ -673,7 +767,9 @@ namespace optparse
             }
         }
         if (option.dest() == "")
+        {
             option.dest(dest_fallback);
+        }
         return option;
     }
 
@@ -682,10 +778,19 @@ namespace optparse
         for (std::list<Option>::const_iterator oit = group._opts.begin(); oit != group._opts.end(); ++oit)
         {
             const Option &option = *oit;
-            for (std::set<std::string>::const_iterator it = option._short_opts.begin(); it != option._short_opts.end(); ++it)
+            for (std::set<std::string>::const_iterator it = option._short_opts.begin();
+                 it != option._short_opts.end();
+                 ++it)
+            {
                 _optmap_s[*it] = &option;
-            for (std::set<std::string>::const_iterator it = option._long_opts.begin(); it != option._long_opts.end(); ++it)
+            }
+
+            for (std::set<std::string>::const_iterator it = option._long_opts.begin();
+                 it != option._long_opts.end();
+                 ++it)
+            {
                 _optmap_l[*it] = &option;
+            }
         }
         _groups.push_back(&group);
         return *this;
@@ -695,7 +800,9 @@ namespace optparse
     {
         std::map<std::string, Option const *>::const_iterator it = _optmap_s.find(opt);
         if (it == _optmap_s.end())
+        {
             error("no such option" + std::string(": -") + opt);
+        }
         return *it->second;
     }
 
@@ -711,7 +818,9 @@ namespace optparse
             if (value == "")
             {
                 if (_remaining.empty())
+                {
                     error("-" + opt + " " + "option requires an argument");
+                }
                 value = _remaining.front();
                 _remaining.pop_front();
             }
@@ -719,7 +828,9 @@ namespace optparse
         else
         {
             if (arg.length() > 2)
+            {
                 _remaining.push_front(std::string("-") + arg.substr(2));
+            }
         }
 
         process_opt(option, std::string("-") + opt, value);
@@ -731,7 +842,9 @@ namespace optparse
         for (std::map<std::string, Option const *>::const_iterator it = _optmap_l.begin(); it != _optmap_l.end(); ++it)
         {
             if (it->first.compare(0, opt.length(), opt) == 0)
+            {
                 matching.push_back(it->first);
+            }
         }
         if (matching.size() > 1)
         {
@@ -739,7 +852,9 @@ namespace optparse
             error("ambiguous option" + std::string(": --") + opt + " (" + x + "?)");
         }
         if (matching.size() == 0)
+        {
             error("no such option" + std::string(": --") + opt);
+        }
 
         return *_optmap_l.find(matching.front())->second;
     }
@@ -756,7 +871,9 @@ namespace optparse
             value = optstr.substr(delim + 1);
         }
         else
+        {
             opt = optstr;
+        }
 
         const Option &option = lookup_long_opt(opt);
         if (option._nargs == 1 and delim == std::string::npos)
@@ -769,7 +886,9 @@ namespace optparse
         }
 
         if (option._nargs == 1 and value == "")
+        {
             error("--" + opt + " " + "option requires an argument");
+        }
 
         process_opt(option, std::string("--") + opt, value);
     }
@@ -777,9 +896,12 @@ namespace optparse
     Values &OptionParser::parse_args(const int argc, char const *const *const argv)
     {
         if (prog() == "")
+        {
             prog(detail::basename(argv[0]));
+        }
         return parse_args(&argv[1], &argv[argc]);
     }
+
     Values &OptionParser::parse_args(const std::vector<std::string> &v)
     {
         _remaining.assign(v.begin(), v.end());
@@ -899,7 +1021,9 @@ namespace optparse
         {
             std::string err = o.check_type(opt, value);
             if (err != "")
+            {
                 error(err);
+            }
             _values[o.dest()] = value;
             _values.all(o.dest()).push_back(value);
             _values.is_set_by_user(o.dest(), true);
@@ -983,6 +1107,7 @@ namespace optparse
 
         return ss.str();
     }
+
     void OptionParser::print_help() const
     {
         std::cout << format_help();
@@ -1001,16 +1126,19 @@ namespace optparse
             _usage = u;
         }
     }
+
     std::string OptionParser::format_usage(const std::string &u) const
     {
         std::stringstream ss;
         ss << "Usage" << ": " << u << std::endl;
         return ss.str();
     }
+
     std::string OptionParser::get_usage() const
     {
         return format_usage(detail::str_replace(usage(), "%prog", prog()));
     }
+
     void OptionParser::print_usage(std::ostream &out) const
     {
         std::string u = get_usage();
@@ -1019,6 +1147,7 @@ namespace optparse
             out << u << std::endl;
         }
     }
+
     void OptionParser::print_usage() const
     {
         print_usage(std::cout);
@@ -1028,10 +1157,12 @@ namespace optparse
     {
         return detail::str_replace(_version, "%prog", prog());
     }
+
     void OptionParser::print_version(std::ostream &out) const
     {
         out << get_version() << std::endl;
     }
+
     void OptionParser::print_version() const
     {
         print_version(std::cout);
@@ -1041,6 +1172,7 @@ namespace optparse
     {
         std::exit(2);
     }
+
     void OptionParser::error(const std::string &msg) const
     {
         print_usage(std::cerr);
@@ -1055,6 +1187,7 @@ namespace optparse
         static const std::string empty = "";
         return (it != _map.end()) ? it->second : empty;
     }
+
     void Values::is_set_by_user(const std::string &d, bool yes)
     {
         if (yes)
@@ -1109,7 +1242,9 @@ namespace optparse
 
     std::string Option::format_option_help(const unsigned int indent) const
     {
-        std::string mvar_short, mvar_long;
+        std::string mvar_short;
+        std::string mvar_long;
+
         if (nargs() == 1)
         {
             std::string mvar = metavar();
@@ -1129,10 +1264,14 @@ namespace optparse
         {
             ss << detail::str_join_trans(", ", _short_opts.begin(), _short_opts.end(), detail::str_wrap("-", mvar_short));
             if (not _long_opts.empty())
+            {
                 ss << ", ";
+            }
         }
         if (not _long_opts.empty())
+        {
             ss << detail::str_join_trans(", ", _long_opts.begin(), _long_opts.end(), detail::str_wrap("--", mvar_long));
+        }
 
         return ss.str();
     }
@@ -1145,6 +1284,7 @@ namespace optparse
         unsigned int opt_width = std::min(width * 3 / 10, 36u);
         bool indent_first = false;
         ss << h;
+
         // If the option list is too long, start a new paragraph.
         if (h.length() >= (opt_width - 1))
         {
@@ -1157,11 +1297,13 @@ namespace optparse
             if (help() == "")
                 ss << std::endl;
         }
+
         if (help() != "")
         {
             std::string help_str = (get_default() != "") ? detail::str_replace(help(), "%default", get_default()) : help();
             ss << detail::str_format(help_str, opt_width, width, indent_first);
         }
+
         return ss.str();
     }
 
