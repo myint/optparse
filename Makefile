@@ -19,6 +19,7 @@ check: test.o
 	$(CXX) -o tmp_test test.o tmp_second.cc
 	rm tmp_second.cc
 	./tmp_test
+	rm tmp_test
 
 clean:
 	rm -f *.o $(BIN)
