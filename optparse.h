@@ -525,13 +525,17 @@ namespace optparse
             {
                 long t;
                 if (not (ss >> t))
+                {
                     err << "option" << " " << opt << ": " << "invalid integer value" << ": '" << val << "'";
+                }
             }
             else if (type() == "float" or type() == "double")
             {
                 double t;
                 if (not (ss >> t))
+                {
                     err << "option" << " " << opt << ": " << "invalid floating-point value" << ": '" << val << "'";
+                }
             }
             else if (type() == "choice")
             {
