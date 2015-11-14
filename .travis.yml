@@ -8,3 +8,4 @@ compiler:
 
 script:
     - ./test.bash
+    - make check
