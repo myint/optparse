@@ -830,9 +830,9 @@ namespace optparse
             return parse_args(&argv[1], &argv[argc]);
         }
 
-        Values &parse_args(const std::vector<std::string> &args)
+        Values &parse_args(const std::vector<std::string> &arguments)
         {
-            return detail::parse_args_helper(*this, args);
+            return detail::parse_args_helper(*this, arguments);
         }
 
         template<typename InputIterator>
