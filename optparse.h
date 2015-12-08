@@ -220,7 +220,8 @@ namespace optparse
 
         static std::string &str_replace_helper(std::string &s, const std::string &patt, const std::string &repl)
         {
-            size_t pos = 0, n = patt.length();
+            size_t pos = 0;
+            const size_t n = patt.length();
             while (true)
             {
                 pos = s.find(patt, pos);
@@ -1008,7 +1009,8 @@ namespace optparse
         void handle_long_opt(const std::string &optstr)
         {
             _remaining.pop_front();
-            std::string opt, value;
+            std::string opt;
+            std::string value;
 
             size_t delim = optstr.find("=");
             if (delim != std::string::npos)
