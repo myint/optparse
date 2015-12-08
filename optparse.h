@@ -293,9 +293,8 @@ namespace optparse
         static std::string str_inc(const std::string &s)
         {
             std::stringstream ss;
-            std::string v = (s != "") ? s : "0";
-            long i;
-            std::istringstream(v) >> i;
+            long i = 0;
+            std::istringstream(s) >> i;
             ss << i + 1;
             return ss.str();
         }
