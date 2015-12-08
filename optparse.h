@@ -217,7 +217,8 @@ namespace optparse
             return str_join_trans(sep, begin, end, str_wrap(""));
         }
 
-        static std::string &str_replace(std::string &s, const std::string &patt, const std::string &repl)
+
+        static std::string &str_replace_helper(std::string &s, const std::string &patt, const std::string &repl)
         {
             size_t pos = 0, n = patt.length();
             while (true)
@@ -238,7 +239,7 @@ namespace optparse
         static std::string str_replace(const std::string &s, const std::string &patt, const std::string &repl)
         {
             std::string tmp = s;
-            str_replace(tmp, patt, repl);
+            str_replace_helper(tmp, patt, repl);
             return tmp;
         }
 
