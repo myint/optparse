@@ -4,20 +4,19 @@ WARN_FLAGS = \
 	-Wcast-align -Wpointer-arith -Wwrite-strings -Wundef \
 	-Wredundant-decls -Werror
 
-BIN = test
-OBJECTS = test.o
+all: test test_no_intersperse
 
-$(BIN): $(OBJECTS)
-	$(CXX) -o $@ $(OBJECTS) $(WARN_FLAGS)
+test: test.cpp optparse.h
+	$(CXX) $(WARN_FLAGS) $< -o $@
 
-%.o: %.cpp optparse.h
-	$(CXX) $(WARN_FLAGS) -c $< -o $@
+test_no_intersperse: test.cpp optparse.h
+	$(CXX) $(WARN_FLAGS) -DDISABLE_INTERSPERSED_ARGS=1 $< -o $@
 
 # Check includes in multiple files.
-check: test.o
-	echo '#include "optparse.h"' > tmp_second.cc
-	$(CXX) -o tmp_test test.o tmp_second.cc
-	rm tmp_second.cc
+check:
+	echo '#include "optparse.h"' > tmp_second.cpp
+	$(CXX) -o tmp_test test.cpp tmp_second.cpp
+	rm tmp_second.cpp
 	./tmp_test
 	rm tmp_test
 

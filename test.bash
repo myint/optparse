@@ -12,4 +12,6 @@ make
 ./test -kkk | grep '^k: 3$'
 ./test --callback=foo | grep '^--- MyCallback --- val: foo$'
 
+./test_no_intersperse foo --non-existent
+
 echo -e '\x1b[01;32mOK\x1b[0m'

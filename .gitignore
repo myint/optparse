@@ -1,3 +1,5 @@
 .*.sw?
 /test
+/test_no_intersperse
 *.o
+*.dSYM/
