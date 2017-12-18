@@ -319,7 +319,7 @@ namespace optparse
         static std::string basename(const std::string &s)
         {
             std::string b = s;
-            size_t i = b.find_last_not_of('/');
+            size_t i = b.find_last_not_of("/\\");
             if (i == std::string::npos)
             {
                 if (b[0] == '/')
@@ -331,7 +331,7 @@ namespace optparse
             }
 
             b.erase(i + 1, b.length() - i - 1);
-            i = b.find_last_of("/");
+            i = b.find_last_of("/\\");
             if (i != std::string::npos)
             {
                 b.erase(0, i + 1);
