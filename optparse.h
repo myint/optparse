@@ -668,6 +668,9 @@ namespace optparse
         {
         }
 
+        virtual ~OptionParser()
+        {
+        }
 
         OptionParser &usage(const std::string &u)
         {
@@ -935,16 +938,16 @@ namespace optparse
             print_version(std::cout);
         }
 
-        void error(const std::string &msg) const
+        virtual void error(const std::string &msg) const
         {
             print_usage(std::cerr);
             std::cerr << prog() << ": " << "error" << ": " << msg << std::endl;
-            exit();
+            exit(2);
         }
 
-        void exit() const
+        virtual void exit(int code) const
         {
-            std::exit(2);
+            std::exit(code);
         }
 
     private:
@@ -1099,12 +1102,12 @@ namespace optparse
             else if (o.action() == "help")
             {
                 print_help();
-                std::exit(0);
+                exit(0);
             }
             else if (o.action() == "version")
             {
                 print_version();
-                std::exit(0);
+                exit(0);
             }
             else if (o.action() == "callback" and o.callback())
             {
