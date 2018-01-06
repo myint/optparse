@@ -878,7 +878,7 @@ namespace optparse
 
         void print_help() const
         {
-            std::cout << format_help();
+            //std::cout << format_help();
         }
 
         void set_usage(const std::string &u)
@@ -911,7 +911,7 @@ namespace optparse
 
         void print_usage() const
         {
-            print_usage(std::cout);
+            //print_usage(std::cout);
         }
 
         std::string get_version() const
@@ -926,19 +926,18 @@ namespace optparse
 
         void print_version() const
         {
-            print_version(std::cout);
+            //print_version(std::cout);
         }
 
         void error(const std::string &msg) const
         {
-            print_usage(std::cerr);
-            std::cerr << prog() << ": " << "error" << ": " << msg << std::endl;
-            exit();
+            //print_usage(std::cerr);
+            throw std::invalid_argument("error");
         }
 
         void exit() const
         {
-            std::exit(2);
+            throw std::invalid_argument("exit");
         }
 
     private:
@@ -1093,12 +1092,12 @@ namespace optparse
             else if (o.action() == "help")
             {
                 print_help();
-                std::exit(0);
+                throw std::invalid_argument("help");
             }
             else if (o.action() == "version")
             {
                 print_version();
-                std::exit(0);
+                throw std::invalid_argument("version");
             }
             else if (o.action() == "callback" and o.callback())
             {

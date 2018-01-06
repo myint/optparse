@@ -7,7 +7,7 @@ WARN_FLAGS = \
 all: test test_no_intersperse
 
 test: test.cpp optparse.h
-	$(CXX) $(WARN_FLAGS) $< -o $@
+	$(CXX) $(WARN_FLAGS) -fsanitize=address,undefined$< -o $@
 
 test_no_intersperse: test.cpp optparse.h
 	$(CXX) $(WARN_FLAGS) -DDISABLE_INTERSPERSED_ARGS=1 $< -o $@
