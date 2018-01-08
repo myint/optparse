@@ -1154,6 +1154,15 @@ namespace optparse
     };
 
 
+    class OptionParserExcept : public OptionParser
+    {
+    public:
+        virtual void exit(int code) const
+        {
+            throw code;
+        }
+    };
+
     class OptionGroup : public OptionParser
     {
     public:

@@ -7,8 +7,16 @@ WARN_FLAGS = \
 BIN = test
 OBJECTS = test.o
 
+BIN2 = test2
+OBJECTS2 = test2.o
+
+all : $(BIN) $(BIN2)
+
 $(BIN): $(OBJECTS)
 	$(CXX) -o $@ $(OBJECTS) $(WARN_FLAGS)
+
+$(BIN2): $(OBJECTS2)
+	$(CXX) -o $@ $(OBJECTS2) $(WARN_FLAGS)
 
 %.o: %.cpp optparse.h
 	$(CXX) $(WARN_FLAGS) -c $< -o $@
