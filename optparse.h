@@ -574,7 +574,7 @@ namespace optparse
             if (nargs() == 1)
             {
                 std::string mvar = metavar();
-                if (mvar == "")
+                if (mvar.empty())
                 {
                     mvar = type();
                     std::transform(mvar.begin(), mvar.end(), mvar.begin(), ::toupper);
@@ -620,13 +620,13 @@ namespace optparse
             else
             {
                 ss << std::string(opt_width - h.length(), ' ');
-                if (help() == "")
+                if (help().empty())
                     ss << std::endl;
             }
 
-            if (help() != "")
+            if (not help().empty())
             {
-                std::string help_str = (get_default() != "") ? detail::str_replace(help(), "%default", get_default()) : help();
+                std::string help_str = (not get_default().empty()) ? detail::str_replace(help(), "%default", get_default()) : help();
                 ss << detail::str_format(help_str, opt_width, width, indent_first);
             }
 
@@ -796,7 +796,7 @@ namespace optparse
                 if (it->substr(0, 2) == "--")
                 {
                     const std::string s = it->substr(2);
-                    if (option.dest() == "")
+                    if (option.dest().empty())
                         option.dest(detail::str_replace(s, "-", "_"));
                     option._long_opts.insert(s);
                     _optmap_l[s] = &option;
@@ -804,13 +804,13 @@ namespace optparse
                 else
                 {
                     const std::string s = it->substr(1, 1);
-                    if (dest_fallback == "")
+                    if (dest_fallback.empty())
                         dest_fallback = s;
                     option._short_opts.insert(s);
                     _optmap_s[s] = &option;
                 }
             }
-            if (option.dest() == "")
+            if (option.dest().empty())
             {
                 option.dest(dest_fallback);
             }
@@ -837,7 +837,7 @@ namespace optparse
 
         Values &parse_args(int argc, char const *const *argv)
         {
-            if (prog() == "")
+            if (prog().empty())
             {
                 prog(detail::basename(argv[0]));
             }
@@ -912,7 +912,7 @@ namespace optparse
         void print_usage(std::ostream &out) const
         {
             std::string u = get_usage();
-            if (u != "")
+            if (not u.empty())
             {
                 out << u << std::endl;
             }
@@ -994,7 +994,7 @@ namespace optparse
             if (option._nargs == 1)
             {
                 value = arg.substr(2);
-                if (value == "")
+                if (value.empty())
                 {
                     if (_remaining.empty())
                     {
@@ -1021,7 +1021,7 @@ namespace optparse
             std::string opt;
             std::string value;
 
-            size_t delim = optstr.find("=");
+            size_t delim = optstr.find('=');
             if (delim != std::string::npos)
             {
                 opt = optstr.substr(0, delim);
@@ -1042,7 +1042,7 @@ namespace optparse
                 }
             }
 
-            if (option._nargs == 1 and value == "")
+            if (option._nargs == 1 and value.empty())
             {
                 error("--" + opt + " " + "option requires an argument");
             }
@@ -1055,7 +1055,7 @@ namespace optparse
             if (o.action() == "store")
             {
                 std::string err = o.check_type(opt, value);
-                if (err != "")
+                if (not err.empty())
                 {
                     error(err);
                 }
@@ -1080,7 +1080,7 @@ namespace optparse
             else if (o.action() == "append")
             {
                 std::string err = o.check_type(opt, value);
-                if (err != "")
+                if (not err.empty())
                 {
                     error(err);
                 }
@@ -1231,7 +1231,7 @@ namespace optparse
         {
             parser._remaining.assign(v.begin(), v.end());
 
-            if (parser.add_version_option() and parser.version() != "")
+            if (parser.add_version_option() and not parser.version().empty())
             {
                 parser.add_option("--version").action("version").help("show program's version number and exit");
                 parser._opts.splice(parser._opts.begin(), parser._opts, --(parser._opts.end()));
@@ -1287,7 +1287,7 @@ namespace optparse
 
             for (std::list<Option>::const_iterator it = parser._opts.begin(); it != parser._opts.end(); ++it)
             {
-                if (it->get_default() != "" and not parser._values.is_set(it->dest()))
+                if (not it->get_default().empty() and not parser._values.is_set(it->dest()))
                 {
                     parser._values[it->dest()] = it->get_default();
                 }
@@ -1299,13 +1299,13 @@ namespace optparse
                 {
                     if (not parser._values.is_set(it->first))
                     {
-                        parser._values[it->first] = it->second;;
+                        parser._values[it->first] = it->second;
                     }
                 }
 
                 for (std::list<Option>::const_iterator it = (*group_it)->_opts.begin(); it != (*group_it)->_opts.end(); ++it)
                 {
-                    if (it->get_default() != "" and not parser._values.is_set(it->dest()))
+                    if (not it->get_default().empty() and not parser._values.is_set(it->dest()))
                     {
                         parser._values[it->dest()] = it->get_default();
                     }
@@ -1322,7 +1322,7 @@ namespace optparse
 
             ss << parser.get_usage() << std::endl;
 
-            if (parser.description() != "")
+            if (not parser.description().empty())
             {
                 ss << detail::str_format(parser.description(), 0, detail::cols()) << std::endl;
             }
@@ -1336,12 +1336,12 @@ namespace optparse
             {
                 const OptionGroup &group = **it;
                 ss << std::endl << "  " << group.title() << ":" << std::endl;
-                if (group.group_description() != "")
+                if (not group.group_description().empty())
                     ss << detail::str_format(group.group_description(), 4, detail::cols()) << std::endl;
                 ss << group.format_option_help(4);
             }
 
-            if (parser.epilog() != "")
+            if (not parser.epilog().empty())
             {
                 ss << std::endl << detail::str_format(parser.epilog(), 0, detail::cols());
             }

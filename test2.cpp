@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
         "This is free software: you are free to change and redistribute it.\n"
         "There is NO WARRANTY, to the extent permitted by law.";
 
-    optparse::OptionParserExcept parser = optparse::OptionParserExcept();
+    optparse::OptionParserExcept parser;
     parser.version(version)
           .description("Description")
           .epilog("Epilog");
