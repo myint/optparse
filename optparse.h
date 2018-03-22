@@ -970,7 +970,7 @@ namespace optparse
             std::vector<std::string> matching;
             for (std::map<std::string, Option const *>::const_iterator it = _optmap_l.begin(); it != _optmap_l.end(); ++it)
             {
-                if (it->first.compare(0, opt.length(), opt) == 0)
+                if (it->first == opt)
                 {
                     matching.push_back(it->first);
                 }
