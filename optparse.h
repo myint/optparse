@@ -820,19 +820,19 @@ namespace optparse
         Option &add_option(const std::string &opt)
         {
             const std::string tmp[1] = {opt};
-            return add_option(std::vector<std::string>(&tmp[0], &tmp[1]));
+            return add_option(std::vector<std::string>(tmp, tmp+1));
         }
 
         Option &add_option(const std::string &opt1, const std::string &opt2)
         {
             const std::string tmp[2] = {opt1, opt2};
-            return add_option(std::vector<std::string>(&tmp[0], &tmp[2]));
+            return add_option(std::vector<std::string>(tmp, tmp+2));
         }
 
         Option &add_option(const std::string &opt1, const std::string &opt2, const std::string &opt3)
         {
             const std::string tmp[3] = {opt1, opt2, opt3};
-            return add_option(std::vector<std::string>(&tmp[0], &tmp[3]));
+            return add_option(std::vector<std::string>(tmp, tmp+3));
         }
 
         Values &parse_args(int argc, char const *const *argv)
@@ -958,6 +958,9 @@ namespace optparse
             if (it == _optmap_s.end())
             {
                 error("no such option" + std::string(": -") + opt);
+
+                static const Option empty;
+                return empty;
             }
             return *it->second;
         }
@@ -967,7 +970,7 @@ namespace optparse
             std::vector<std::string> matching;
             for (std::map<std::string, Option const *>::const_iterator it = _optmap_l.begin(); it != _optmap_l.end(); ++it)
             {
-                if (it->first.compare(0, opt.length(), opt) == 0)
+                if (it->first == opt)
                 {
                     matching.push_back(it->first);
                 }
@@ -980,6 +983,9 @@ namespace optparse
             if (matching.size() == 0)
             {
                 error("no such option" + std::string(": --") + opt);
+
+                static const Option empty;
+                return empty;
             }
 
             return *_optmap_l.find(matching.front())->second;
