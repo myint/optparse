@@ -30,6 +30,6 @@ check: test.o
 	rm tmp_test
 
 clean:
-	rm -f *.o $(BIN)
+	rm -f *.o $(BIN) $(BIN2)
 
 .PHONY: check clean

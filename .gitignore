@@ -1,3 +1,4 @@
 .*.sw?
 /test
+/test2
 *.o
