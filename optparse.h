@@ -1163,6 +1163,8 @@ namespace optparse
     class OptionParserExcept : public OptionParser
     {
     public:
+        OptionParserExcept() {}
+        OptionParserExcept(const OptionParser & parser) : OptionParser(parser) { }
         virtual void exit(int code) const
         {
             throw code;
